@@ -1,7 +1,6 @@
 #include <iostream>
-#include <array>
 using namespace std;
-array<array<char,3>,3> game_input(array<array<char,3>,3>&game,char player){
+void game_input(char(*game)[3],char player){
     int i,j;
     cout<<"Please give the address of "<<player<<endl;
     cout<<"Give the address i: ";
@@ -12,21 +11,20 @@ array<array<char,3>,3> game_input(array<array<char,3>,3>&game,char player){
     //Check validity of input
     if (i < 0 || i > 2 || j < 0 || j > 2) {
         cout << "Invalid input! Please enter values between 0 and 2." << endl;
-        return game_input(game, player);
+        game_input(game, player);
     }
 
     //Check where to put and if cell is empty 
-    if (game[i][j]==' '){
+    if (game[i][j] == ' '){
         game[i][j] = player;        //X or O depending on whose turn it is!
     }
     else{
         //Recursion prevents using same cell over writing. 
         cout<<"Cell is occupied pls try different one!"<<endl;
-        return game_input(game,player);
-    }   
-    return game;
+        game_input(game,player);
+    }
 }
-void print(array<array<char,3>,3>&game_board){
+void print(char (*game_board)[3]){
     //GAME BOARD
     for (int i = 0; i < 3;i++ ){
         cout << "  " << game_board[i][0] << " | " << game_board[i][1] << " | " << game_board[i][2] << endl;
@@ -34,7 +32,7 @@ void print(array<array<char,3>,3>&game_board){
     }
 
 }
-char game_status(array<array<char,3>,3>&game_board){
+char game_status(char game_board[3][3]){
     //Row check!
     for (int i = 0; i < 3; i++)
     {   
@@ -79,7 +77,6 @@ bool winner(char answer){
             cout<<"====================="<<endl;
             return false;
         }
-        //TODO: Think once more how u can deal with this one to find draw
     else{
             cout<<"Game is still going on!"<<endl;
             cout<<endl<<endl;
@@ -87,7 +84,7 @@ bool winner(char answer){
         }
 
 }
-bool is_board_full(array<array<char,3>,3>&game_board){
+bool is_board_full(char game_board[3][3]){
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -109,12 +106,13 @@ bool is_board_full(array<array<char,3>,3>&game_board){
 int main(){
     cout<<"======Welcome to Tic Tac Toe Game!!!=========="<<endl;
     bool game = true;
-    array<array<char,3>,3> game_board = {{
+    char game_board[3][3] = {
         {' ',' ',' '},
         {' ',' ',' '},
-        {' ',' ',' '}}
+        {' ',' ',' '}
     };
-    char answer; 
+    char answer;
+    //TEST CASE
     print(game_board);    
     while (game)
     {
@@ -140,7 +138,6 @@ int main(){
         {
             break;
         }
-        
     }
     return 0;
 }
