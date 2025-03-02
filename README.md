@@ -1,1 +1,1 @@
-A simple tic-tac-toe game using cpp.
+Some code star notes
